@@ -1,0 +1,344 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+.app{max-width:900px;margin:0 auto;padding:1rem;}
+.header{background:linear-gradient(135deg,#0a2e6e 0%,#1a4fa0 60%,#2196F3 100%);border-radius:12px;padding:1.25rem 1.75rem;margin-bottom:1rem;display:flex;align-items:center;gap:1.25rem;}
+.brand-text h1{color:white;font-size:19px;font-weight:500;}
+.brand-text p{color:rgba(255,255,255,0.75);font-size:11px;margin-top:2px;}
+.header-right{margin-left:auto;text-align:right;}
+.date-badge{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;font-size:11px;padding:4px 12px;border-radius:20px;}
+.client-count{color:rgba(255,255,255,0.8);font-size:11px;margin-top:4px;}
+.sheets-bar{display:flex;align-items:center;gap:10px;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:10px 14px;margin-bottom:1rem;}
+.sdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;transition:background .3s;}
+.sdot.off{background:#9ca3af;} .sdot.wait{background:#f59e0b;animation:pu 1s infinite;} .sdot.on{background:#16a34a;} .sdot.err{background:#dc2626;}
+@keyframes pu{0%,100%{opacity:1;}50%{opacity:.4;}}
+.slabel{font-size:13px;font-weight:500;color:var(--color-text-primary);}
+.ssub{font-size:11px;color:var(--color-text-secondary);}
+.sbtn{margin-left:auto;padding:6px 14px;background:#1a4fa0;color:white;border:none;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:5px;}
+.sbtn:hover{background:#0a2e6e;} .sbtn:disabled{background:#9ca3af;cursor:default;}
+.tabs{display:flex;gap:4px;margin-bottom:1rem;background:var(--color-background-secondary);border-radius:8px;padding:4px;border:0.5px solid var(--color-border-tertiary);}
+.tab{flex:1;padding:7px 8px;border:none;background:transparent;color:var(--color-text-secondary);font-size:12px;font-weight:500;cursor:pointer;border-radius:6px;display:flex;align-items:center;justify-content:center;gap:5px;}
+.tab.active{background:var(--color-background-primary);color:var(--color-text-primary);border:0.5px solid var(--color-border-tertiary);}
+.sec{display:none;} .sec.active{display:block;}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:1.1rem 1.4rem;margin-bottom:1rem;}
+.ctitle{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:.9rem;display:flex;align-items:center;gap:7px;}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.fgi{display:flex;flex-direction:column;gap:3px;} .fgf{grid-column:1/-1;}
+label{font-size:10px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.4px;}
+input,select,textarea{width:100%;padding:7px 10px;border:0.5px solid var(--color-border-tertiary);border-radius:8px;background:var(--color-background-secondary);color:var(--color-text-primary);font-size:13px;font-family:inherit;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#1a4fa0;box-shadow:0 0 0 3px rgba(26,79,160,.12);}
+input[readonly]{background:var(--color-background-tertiary);color:var(--color-text-secondary);}
+textarea{resize:vertical;min-height:64px;}
+.idw{position:relative;} .idbadge{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:#e8f0fe;color:#1a4fa0;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500;}
+.brow{display:flex;gap:8px;justify-content:flex-end;margin-top:.9rem;padding-top:.9rem;border-top:0.5px solid var(--color-border-tertiary);}
+.btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;border:0.5px solid var(--color-border-secondary);display:inline-flex;align-items:center;gap:5px;}
+.bp{background:#1a4fa0;color:white;border-color:#1a4fa0;} .bp:hover{background:#0a2e6e;} .bp:disabled{background:#9ca3af;border-color:#9ca3af;cursor:default;}
+.bs{background:var(--color-background-secondary);color:var(--color-text-primary);}
+.sdiv{font-size:10px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.8px;padding:3px 0 7px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:7px;margin-top:3px;grid-column:1/-1;}
+.req{color:#dc2626;}
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:1rem;}
+.sc{background:var(--color-background-secondary);border-radius:8px;padding:.9rem;text-align:center;}
+.sn{font-size:20px;font-weight:500;} .sl{font-size:11px;color:var(--color-text-secondary);margin-top:2px;}
+.sc.blue .sn{color:#1a4fa0;} .sc.green .sn{color:#16a34a;} .sc.amber .sn{color:#b45309;} .sc.purple .sn{color:#7c3aed;}
+.dbt{width:100%;border-collapse:collapse;font-size:11px;}
+.dbt th{background:#0a2e6e;color:white;padding:7px 9px;text-align:left;font-weight:500;font-size:10px;}
+.dbt th:first-child{border-radius:8px 0 0 0;} .dbt th:last-child{border-radius:0 8px 0 0;}
+.dbt td{padding:7px 9px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:middle;}
+.dbt tr:hover td{background:var(--color-background-secondary);}
+.dbt tr:last-child td{border-bottom:none;}
+.pb{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:500;}
+.p7{background:#ede9fe;color:#5b21b6;} .p10{background:#dbeafe;color:#1d4ed8;} .p15{background:#dcfce7;color:#166534;} .p20{background:#fef9c3;color:#854d0e;}
+.secb{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary);}
+.toast{position:fixed;bottom:18px;right:18px;color:white;padding:10px 16px;border-radius:8px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:7px;z-index:9999;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+.sbar{display:flex;gap:8px;margin-bottom:1rem;} .sbar input{flex:1;}
+.tw{overflow-x:auto;}
+.es{text-align:center;padding:2.5rem 1rem;color:var(--color-text-secondary);font-size:13px;}
+.ab{padding:3px 7px;font-size:10px;border:0.5px solid var(--color-border-tertiary);border-radius:5px;background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;}
+.ab.del:hover{background:#fef2f2;color:#dc2626;border-color:#fecaca;}
+.pb2{height:5px;border-radius:3px;background:var(--color-background-secondary);margin-top:4px;}
+.pf{height:5px;border-radius:3px;transition:width .4s;}
+</style>
+
+<h2 class="sr-only">Sistema de Gestión de Clientes Zonlin Dominicana S.R.L</h2>
+<div class="app">
+
+<div class="header">
+  <svg width="52" height="52" viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="30" fill="white" fill-opacity=".1" stroke="white" stroke-opacity=".4" stroke-width="1"/>
+    <text x="32" y="24" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="14" fill="white">ZON</text>
+    <text x="32" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="rgba(255,255,255,.85)" letter-spacing="2">LIN</text>
+    <path d="M14 44 Q32 54 50 44" stroke="rgba(255,255,255,.5)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <circle cx="22" cy="46" r="2" fill="#33ccff"/><circle cx="32" cy="50" r="2" fill="#33ccff"/><circle cx="42" cy="46" r="2" fill="#33ccff"/>
+    <line x1="22" y1="46" x2="32" y2="50" stroke="rgba(51,204,255,.6)" stroke-width="1"/>
+    <line x1="32" y1="50" x2="42" y2="46" stroke="rgba(51,204,255,.6)" stroke-width="1"/>
+  </svg>
+  <div class="brand-text">
+    <h1>Zonlin Dominicana S.R.L</h1>
+    <p>Sistema de Gestión de Clientes — ISP</p>
+  </div>
+  <div class="header-right">
+    <div class="date-badge" id="hDate"></div>
+    <div class="client-count" id="hCount">Cargando...</div>
+  </div>
+</div>
+
+<div class="sheets-bar">
+  <div class="sdot wait" id="sdot"></div>
+  <div>
+    <div class="slabel"><i class="ti ti-brand-google" aria-hidden="true"></i> Google Sheets</div>
+    <div class="ssub" id="ssub">Conectando automáticamente...</div>
+  </div>
+  <button class="sbtn" id="sbtn" onclick="reconectar()"><i class="ti ti-refresh" aria-hidden="true"></i> Reconectar</button>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('reg')"><i class="ti ti-user-plus" aria-hidden="true"></i> Registrar</button>
+  <button class="tab" onclick="switchTab('db')"><i class="ti ti-database" aria-hidden="true"></i> Base de Datos</button>
+  <button class="tab" onclick="switchTab('st')"><i class="ti ti-chart-bar" aria-hidden="true"></i> Estadísticas</button>
+</div>
+
+<div id="tab-reg" class="sec active">
+  <div class="card">
+    <div class="ctitle"><i class="ti ti-id-badge-2" style="font-size:15px;color:#1a4fa0" aria-hidden="true"></i> Información del Cliente</div>
+    <div class="fg">
+      <div class="fgi"><label>User ID</label><div class="idw"><input type="text" id="userId" readonly/><span class="idbadge">Auto</span></div></div>
+      <div class="fgi"><label>Fecha de Registro</label><input type="text" id="fechaReg" readonly/></div>
+      <div class="fgi fgf"><label>Nombre Completo <span class="req">*</span></label><input type="text" id="nombre" placeholder="Ej: Juan Carlos Pérez Rodríguez"/></div>
+      <div class="fgi"><label>Teléfono <span class="req">*</span></label><input type="text" id="tel" placeholder="809-000-0000"/></div>
+      <div class="fgi"><label>Cédula</label><input type="text" id="cedula" placeholder="000-0000000-0"/></div>
+      <div class="sdiv"><i class="ti ti-wifi" style="font-size:10px;margin-right:3px" aria-hidden="true"></i> Servicio</div>
+      <div class="fgi"><label>Plan <span class="req">*</span></label>
+        <select id="plan" onchange="upPrice()">
+          <option value="">— Seleccionar —</option>
+          <option value="7 Mbps">7 Mbps</option>
+          <option value="10 Mbps">10 Mbps</option>
+          <option value="15 Mbps">15 Mbps</option>
+          <option value="20 Mbps">20 Mbps</option>
+        </select>
+      </div>
+      <div class="fgi"><label>Sector <span class="req">*</span></label>
+        <select id="sector">
+          <option value="">— Seleccionar —</option>
+          <option value="Los Vasquez">Los Vasquez</option>
+          <option value="La Lomita">La Lomita</option>
+          <option value="La Toma">La Toma</option>
+          <option value="Morquecho">Morquecho</option>
+        </select>
+      </div>
+      <div class="fgi"><label>Precio (RD$) <span class="req">*</span></label><input type="number" id="precio" placeholder="0"/></div>
+      <div class="fgi"><label>ONT Serial</label><input type="text" id="ont" placeholder="ZTEGC0A1B2C3"/></div>
+      <div class="fgi"><label>IP Address</label><input type="text" id="ip" placeholder="192.168.1.1"/></div>
+      <div class="fgi"><label>GPS</label><input type="text" id="gps" placeholder="18.4861° N, 69.9312° W"/></div>
+      <div class="fgi fgf"><label>Comentarios</label><textarea id="com" placeholder="Notas adicionales..."></textarea></div>
+    </div>
+    <div class="brow">
+      <button class="btn bs" onclick="limpiar()"><i class="ti ti-eraser" aria-hidden="true"></i> Limpiar</button>
+      <button class="btn bp" id="btnG" onclick="guardar()"><i class="ti ti-device-floppy" aria-hidden="true"></i> Guardar Cliente</button>
+    </div>
+  </div>
+</div>
+
+<div id="tab-db" class="sec">
+  <div class="sbar">
+    <input type="text" id="srch" placeholder="Buscar por nombre, ID, sector, plan..." oninput="renderTabla()"/>
+    <button class="btn bs" onclick="sincronizar()" id="btnSy"><i class="ti ti-refresh" aria-hidden="true"></i> Sincronizar</button>
+    <button class="btn bs" onclick="exportCSV()"><i class="ti ti-file-download" aria-hidden="true"></i> CSV</button>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden;"><div class="tw" id="tbl"></div></div>
+</div>
+
+<div id="tab-st" class="sec">
+  <div class="sgrid" id="sgrid"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+    <div class="card"><div class="ctitle"><i class="ti ti-wifi" style="font-size:14px;color:#1a4fa0" aria-hidden="true"></i> Por Plan</div><div id="pst"></div></div>
+    <div class="card"><div class="ctitle"><i class="ti ti-map-pin" style="font-size:14px;color:#1a4fa0" aria-hidden="true"></i> Por Sector</div><div id="sst"></div></div>
+  </div>
+  <div class="card" style="margin-top:1rem;">
+    <div class="ctitle"><i class="ti ti-users" style="font-size:14px;color:#16a34a" aria-hidden="true"></i> Últimos Registros</div>
+    <div id="rct"></div>
+  </div>
+</div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyjEL-x_ZUxCaglW3MTVpP9mJkAOtXFpQ-DBGSIU64DqXcCb2z-ZyDt8h4Gea_odLxd/exec';
+const PP = {'7 Mbps':1200,'10 Mbps':1500,'15 Mbps':2000,'20 Mbps':2500};
+const PC = {'7 Mbps':'p7','10 Mbps':'p10','15 Mbps':'p15','20 Mbps':'p20'};
+let clients=[], nextId=1, connected=false;
+
+function pad(n){return n<10?'0'+n:''+n;}
+function nowStr(){const d=new Date();return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;}
+function hDate(){const d=new Date();const dy=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];const mn=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];return `${dy[d.getDay()]}, ${d.getDate()} ${mn[d.getMonth()]} ${d.getFullYear()}`;}
+function recalc(){if(!clients.length){nextId=1;return;}const ns=clients.map(c=>parseInt((c.id||'ZON-0').split('-')[1])||0);nextId=Math.max(...ns)+1;}
+function getId(){return 'ZON-'+pad(nextId);}
+function initForm(){document.getElementById('userId').value=getId();document.getElementById('fechaReg').value=nowStr();}
+function upPrice(){const p=document.getElementById('plan').value;if(p&&PP[p])document.getElementById('precio').value=PP[p];}
+function limpiar(){['nombre','tel','cedula','precio','ont','ip','gps','com'].forEach(id=>document.getElementById(id).value='');document.getElementById('plan').value='';document.getElementById('sector').value='';initForm();}
+
+function toast(msg,err){
+  const t=document.getElementById('toast');
+  t.innerHTML=`<i class="ti ti-${err?'alert-circle':'circle-check'}" aria-hidden="true"></i> ${msg}`;
+  t.style.background=err?'#dc2626':'#16a34a';
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+function setStatus(st){
+  const dot=document.getElementById('sdot');
+  const sub=document.getElementById('ssub');
+  dot.className='sdot '+({on:'on',off:'off',wait:'wait',err:'err'}[st]||'off');
+  if(st==='on'){sub.textContent='✅ Conectado con Google Sheets — sincronización activa';connected=true;}
+  else if(st==='wait'){sub.textContent='Conectando...';connected=false;}
+  else if(st==='err'){sub.textContent='⚠️ Error de conexión — usa el botón Reconectar';connected=false;}
+  else{sub.textContent='Sin conexión';connected=false;}
+}
+
+function saveLocal(){try{localStorage.setItem('znl_c',JSON.stringify(clients));}catch(e){}}
+function loadLocal(){try{const s=localStorage.getItem('znl_c');if(s){clients=JSON.parse(s);recalc();}}catch(e){}}
+
+async function ping(){
+  setStatus('wait');
+  try{
+    const r=await fetch(SHEETS_URL+'?action=ping');
+    const d=await r.json();
+    if(d.ok){setStatus('on');return true;}
+    setStatus('err');return false;
+  }catch(e){setStatus('err');return false;}
+}
+
+async function sincronizar(){
+  if(!connected){toast('Sin conexión con Google Sheets',true);return;}
+  const btn=document.getElementById('btnSy');
+  btn.innerHTML='<i class="ti ti-loader" aria-hidden="true"></i> Sincronizando...';btn.disabled=true;
+  try{
+    const r=await fetch(SHEETS_URL+'?action=getClients');
+    const d=await r.json();
+    if(d.ok&&d.clients){
+      clients=d.clients;recalc();saveLocal();
+      updateHeader();renderTabla();updateStats();
+      toast(`${clients.length} clientes sincronizados`);
+    }else{toast('Error al sincronizar',true);}
+  }catch(e){toast('Error de red al sincronizar',true);}
+  btn.innerHTML='<i class="ti ti-refresh" aria-hidden="true"></i> Sincronizar';btn.disabled=false;
+}
+
+async function reconectar(){
+  const ok=await ping();
+  if(ok){toast('Reconectado con Google Sheets ✅');sincronizar();}
+  else toast('No se pudo reconectar. Verifica el script.',true);
+}
+
+async function pushCliente(c){
+  try{
+    const r=await fetch(SHEETS_URL,{method:'POST',body:JSON.stringify({action:'saveClient',client:c})});
+    return await r.json();
+  }catch(e){return{ok:false,error:e.message};}
+}
+
+async function guardar(){
+  const nombre=document.getElementById('nombre').value.trim();
+  const tel=document.getElementById('tel').value.trim();
+  const plan=document.getElementById('plan').value;
+  const sector=document.getElementById('sector').value;
+  const precio=document.getElementById('precio').value;
+  if(!nombre||!tel||!plan||!sector||!precio){toast('Completa los campos obligatorios (*)',true);return;}
+  const c={id:getId(),fecha:nowStr(),nombre,telefono:tel,cedula:document.getElementById('cedula').value.trim(),plan,sector,precio,ontSerial:document.getElementById('ont').value.trim(),ipAddress:document.getElementById('ip').value.trim(),gps:document.getElementById('gps').value.trim(),comentarios:document.getElementById('com').value.trim()};
+  const btn=document.getElementById('btnG');
+  btn.disabled=true;btn.innerHTML='<i class="ti ti-loader" aria-hidden="true"></i> Guardando...';
+  clients.unshift(c);nextId++;saveLocal();updateHeader();
+  if(connected){
+    const r=await pushCliente(c);
+    toast(r.ok?`✅ ${c.id} guardado en Google Sheets`:`⚠️ Guardado local (fallo Sheets)`,!r.ok);
+  }else{toast(`${c.id} guardado localmente (sin conexión Sheets)`);}
+  limpiar();
+  btn.disabled=false;btn.innerHTML='<i class="ti ti-device-floppy" aria-hidden="true"></i> Guardar Cliente';
+}
+
+async function eliminar(id){
+  if(!confirm('¿Eliminar cliente '+id+'?'))return;
+  clients=clients.filter(c=>c.id!==id);saveLocal();updateHeader();renderTabla();updateStats();
+  if(connected){
+    try{await fetch(SHEETS_URL,{method:'POST',body:JSON.stringify({action:'deleteClient',clientId:id})});toast('Cliente eliminado de Google Sheets');}
+    catch(e){toast('Eliminado local, error en Sheets',true);}
+  }else toast('Cliente eliminado');
+}
+
+function renderTabla(){
+  const q=(document.getElementById('srch').value||'').toLowerCase();
+  const f=clients.filter(c=>(c.nombre||'').toLowerCase().includes(q)||(c.id||'').toLowerCase().includes(q)||(c.sector||'').toLowerCase().includes(q)||(c.plan||'').toLowerCase().includes(q)||(c.telefono||'').includes(q)||(c.cedula||'').includes(q));
+  const cont=document.getElementById('tbl');
+  if(!clients.length){cont.innerHTML='<div class="es"><i class="ti ti-users" style="font-size:38px;display:block;margin-bottom:8px;opacity:.3" aria-hidden="true"></i>No hay clientes aún. Registra el primero.</div>';return;}
+  if(!f.length){cont.innerHTML='<div class="es">Sin resultados para esta búsqueda.</div>';return;}
+  let h=`<table class="dbt"><thead><tr><th>ID</th><th>Nombre</th><th>Tel.</th><th>Plan</th><th>Sector</th><th>Precio</th><th>ONT Serial</th><th>IP</th><th>Fecha</th><th></th></tr></thead><tbody>`;
+  f.forEach(c=>{h+=`<tr>
+    <td style="font-weight:500;color:#1a4fa0">${c.id}</td>
+    <td style="font-weight:500">${c.nombre}</td>
+    <td>${c.telefono||''}</td>
+    <td><span class="pb ${PC[c.plan]||''}">${c.plan}</span></td>
+    <td><span class="secb">${c.sector}</span></td>
+    <td style="font-weight:500;color:#16a34a">RD$ ${Number(c.precio||0).toLocaleString()}</td>
+    <td style="color:var(--color-text-secondary)">${c.ontSerial||'—'}</td>
+    <td style="color:var(--color-text-secondary)">${c.ipAddress||'—'}</td>
+    <td style="color:var(--color-text-secondary);font-size:10px">${c.fecha}</td>
+    <td><button class="ab del" onclick="eliminar('${c.id}')"><i class="ti ti-trash" aria-hidden="true"></i></button></td>
+  </tr>`;});
+  h+='</tbody></table>';cont.innerHTML=h;
+}
+
+function updateStats(){
+  const tot=clients.length;
+  const ing=clients.reduce((s,c)=>s+Number(c.precio||0),0);
+  const pl={},sc={};
+  clients.forEach(c=>{pl[c.plan]=(pl[c.plan]||0)+1;sc[c.sector]=(sc[c.sector]||0)+1;});
+  const tp=Object.entries(pl).sort((a,b)=>b[1]-a[1])[0];
+  const ts=Object.entries(sc).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('sgrid').innerHTML=`
+    <div class="sc blue"><div class="sn">${tot}</div><div class="sl">Total Clientes</div></div>
+    <div class="sc green"><div class="sn">RD$ ${ing.toLocaleString()}</div><div class="sl">Ingresos Mensuales</div></div>
+    <div class="sc amber"><div class="sn">${tp?tp[0]:'—'}</div><div class="sl">Plan Popular</div></div>
+    <div class="sc purple"><div class="sn">${ts?ts[0]:'—'}</div><div class="sl">Sector Líder</div></div>`;
+  const pc=['#7c3aed','#1d4ed8','#166534','#854d0e'];
+  let ph='';['7 Mbps','10 Mbps','15 Mbps','20 Mbps'].forEach((p,i)=>{const c=pl[p]||0;const pct=tot?Math.round(c/tot*100):0;ph+=`<div style="margin-bottom:9px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>${p}</span><span style="color:var(--color-text-secondary)">${c}</span></div><div class="pb2"><div class="pf" style="width:${pct}%;background:${pc[i]}"></div></div></div>`;});
+  document.getElementById('pst').innerHTML=ph||'<p style="font-size:12px;color:var(--color-text-secondary)">Sin datos.</p>';
+  const sc2=['#1a4fa0','#0891b2','#0d9488','#7c3aed'];
+  let sh='';['Los Vasquez','La Lomita','La Toma','Morquecho'].forEach((s,i)=>{const c=sc[s]||0;const pct=tot?Math.round(c/tot*100):0;sh+=`<div style="margin-bottom:9px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>${s}</span><span style="color:var(--color-text-secondary)">${c}</span></div><div class="pb2"><div class="pf" style="width:${pct}%;background:${sc2[i]}"></div></div></div>`;});
+  document.getElementById('sst').innerHTML=sh||'<p style="font-size:12px;color:var(--color-text-secondary)">Sin datos.</p>';
+  const rec=clients.slice(0,5);
+  let rh=rec.length?'':'<p style="font-size:12px;color:var(--color-text-secondary)">Sin registros.</p>';
+  rec.forEach(c=>{rh+=`<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+    <div style="width:32px;height:32px;border-radius:50%;background:#e8f0fe;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#1a4fa0;flex-shrink:0">${(c.nombre||'??').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>
+    <div style="flex:1;min-width:0"><p style="font-weight:500;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.nombre}</p><p style="font-size:10px;color:var(--color-text-secondary)">${c.id} · ${c.sector}</p></div>
+    <div style="text-align:right;flex-shrink:0"><span class="pb ${PC[c.plan]||''}">${c.plan}</span><p style="font-size:10px;color:var(--color-text-secondary);margin-top:2px">RD$ ${Number(c.precio||0).toLocaleString()}/mes</p></div>
+  </div>`;});
+  document.getElementById('rct').innerHTML=rh;
+}
+
+function updateHeader(){
+  document.getElementById('hDate').textContent=hDate();
+  document.getElementById('hCount').textContent=`${clients.length} cliente${clients.length!==1?'s':''} registrado${clients.length!==1?'s':''}`;
+}
+
+function switchTab(n){
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['reg','db','st'][i]===n));
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.getElementById('tab-'+n).classList.add('active');
+  if(n==='db')renderTabla();
+  if(n==='st')updateStats();
+}
+
+function exportCSV(){
+  if(!clients.length){toast('No hay datos',true);return;}
+  const h=['ID','Nombre','Teléfono','Cédula','Plan','Sector','Precio','ONT Serial','IP','GPS','Comentarios','Fecha'];
+  const rows=clients.map(c=>[c.id,c.nombre,c.telefono,c.cedula,c.plan,c.sector,c.precio,c.ontSerial,c.ipAddress,c.gps,c.comentarios,c.fecha].map(v=>`"${(v||'').replace(/"/g,'""')}"`).join(','));
+  const csv=[h.join(','),...rows].join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=`zonlin_${new Date().toISOString().slice(0,10)}.csv`;a.click();
+  toast('CSV exportado');
+}
+
+loadLocal();initForm();updateHeader();
+ping().then(ok=>{if(ok){toast('✅ Conectado con Google Sheets');sincronizar();}else{toast('No se pudo conectar con Sheets. Verifica el script.',true);}});
+</script>
