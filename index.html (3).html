@@ -1,0 +1,366 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+.zapp{max-width:920px;margin:0 auto;padding:1rem;background:#0b1220;border-radius:18px;font-family:var(--font-sans);}
+.zheader{background:linear-gradient(135deg,#0a1f44 0%,#123a7a 45%,#1d63c4 100%);border-radius:16px;padding:1.4rem 1.8rem;margin-bottom:1.1rem;display:flex;align-items:center;gap:1.25rem;position:relative;overflow:hidden;border:1px solid rgba(120,170,255,0.18);}
+.zheader::after{content:'';position:absolute;top:-40%;right:-10%;width:240px;height:240px;background:radial-gradient(circle,rgba(80,170,255,0.25) 0%,rgba(80,170,255,0) 70%);pointer-events:none;}
+.zbrand h1{color:#fff;font-size:19px;font-weight:500;letter-spacing:.2px;}
+.zbrand p{color:rgba(190,215,255,.75);font-size:11px;margin-top:3px;letter-spacing:.3px;}
+.zhright{margin-left:auto;text-align:right;}
+.zdate{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#cfe0ff;font-size:11px;padding:5px 13px;border-radius:20px;backdrop-filter:blur(6px);}
+.zcount{color:rgba(190,215,255,.7);font-size:11px;margin-top:5px;}
+
+.zsheets{display:flex;align-items:center;gap:11px;background:#10192e;border:1px solid #1d2c4d;border-radius:13px;padding:11px 16px;margin-bottom:1.1rem;}
+.zdot{width:9px;height:9px;border-radius:50%;flex-shrink:0;box-shadow:0 0 8px currentColor;}
+.zdot.off{background:#5a6478;color:#5a6478;} .zdot.wait{background:#f0a824;color:#f0a824;animation:zpu 1s infinite;}
+.zdot.on{background:#2fd17a;color:#2fd17a;} .zdot.err{background:#e2504a;color:#e2504a;}
+@keyframes zpu{0%,100%{opacity:1;}50%{opacity:.35;}}
+.zslabel{font-size:13px;font-weight:500;color:#e8edf7;}
+.zssub{font-size:11px;color:#7c8aa8;margin-top:1px;}
+.zsbtn{margin-left:auto;padding:7px 15px;background:linear-gradient(135deg,#1d63c4,#1453a8);color:#fff;border:1px solid #2a6fd4;border-radius:9px;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:5px;transition:filter .15s;}
+.zsbtn:hover{filter:brightness(1.15);} .zsbtn:disabled{background:#39435a;border-color:#39435a;cursor:default;}
+
+.ztabs{display:flex;gap:5px;margin-bottom:1.1rem;background:#10192e;border-radius:12px;padding:5px;border:1px solid #1d2c4d;}
+.ztab{flex:1;padding:9px 10px;border:none;background:transparent;color:#7c8aa8;font-size:12.5px;font-weight:500;cursor:pointer;border-radius:8px;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;}
+.ztab.active{background:linear-gradient(135deg,#1d63c4,#1453a8);color:#fff;box-shadow:0 2px 10px rgba(29,99,196,.35);}
+.ztab:hover:not(.active){color:#cfd8ec;background:rgba(255,255,255,.04);}
+.zsec{display:none;} .zsec.active{display:block;}
+
+.zcard{background:#10192e;border:1px solid #1d2c4d;border-radius:16px;padding:1.3rem 1.5rem;margin-bottom:1rem;}
+.zctitle{font-size:13.5px;font-weight:500;color:#e8edf7;margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+.zfg{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.zfgi{display:flex;flex-direction:column;gap:5px;} .zfgf{grid-column:1/-1;}
+.zfgi label{font-size:10.5px;font-weight:500;color:#7c8aa8;text-transform:uppercase;letter-spacing:.5px;}
+.zfgi input,.zfgi select,.zfgi textarea{width:100%;padding:9px 12px;border:1px solid #243456;border-radius:10px;background:#0c1426;color:#e8edf7;font-size:13px;font-family:inherit;transition:border-color .15s,box-shadow .15s;}
+.zfgi input::placeholder,.zfgi textarea::placeholder{color:#4a5878;}
+.zfgi input:focus,.zfgi select:focus,.zfgi textarea:focus{outline:none;border-color:#3a7fe0;box-shadow:0 0 0 3px rgba(58,127,224,.18);}
+.zfgi input[readonly]{background:#0a1120;color:#8fa2c4;}
+.zfgi textarea{resize:vertical;min-height:62px;}
+.zfgi select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237c8aa8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px;}
+.zidw{position:relative;} .zidbadge{position:absolute;right:9px;top:50%;transform:translateY(-50%);background:rgba(58,127,224,.18);color:#7eb3ff;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500;}
+.zbrow{display:flex;gap:9px;justify-content:flex-end;margin-top:1rem;padding-top:1rem;border-top:1px solid #1d2c4d;}
+.zbtn{padding:9px 19px;border-radius:11px;font-size:12.5px;font-weight:500;cursor:pointer;border:1px solid #2a3a5e;display:inline-flex;align-items:center;gap:6px;transition:all .15s;}
+.zbp{background:linear-gradient(135deg,#1d63c4,#1453a8);color:#fff;border-color:#2a6fd4;box-shadow:0 3px 14px rgba(29,99,196,.3);}
+.zbp:hover{filter:brightness(1.12);transform:translateY(-1px);} .zbp:disabled{background:#39435a;border-color:#39435a;box-shadow:none;cursor:default;transform:none;}
+.zbs{background:#16213d;color:#cfd8ec;} .zbs:hover{background:#1c2a4a;}
+.zdiv{font-size:10px;font-weight:500;color:#5a6c92;text-transform:uppercase;letter-spacing:.9px;padding:4px 0 8px;border-bottom:1px solid #1d2c4d;margin-bottom:8px;margin-top:4px;grid-column:1/-1;}
+.zreq{color:#e2504a;}
+
+.zsgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:1.1rem;}
+.zsc{background:#10192e;border:1px solid #1d2c4d;border-radius:14px;padding:1.05rem;text-align:center;transition:border-color .15s;}
+.zsc:hover{border-color:#2a3a5e;}
+.zsn{font-size:21px;font-weight:500;} .zsl{font-size:10.5px;color:#7c8aa8;margin-top:3px;}
+.zsc.blue .zsn{color:#5a9eff;} .zsc.green .zsn{color:#3fdb8e;} .zsc.amber .zsn{color:#f0b84a;} .zsc.purple .zsn{color:#a78cf0;}
+
+.ztw{overflow-x:auto;}
+.zdbt{width:100%;border-collapse:collapse;font-size:11.5px;}
+.zdbt th{background:#152038;color:#9fb3d9;padding:9px 11px;text-align:left;font-weight:500;font-size:10.5px;letter-spacing:.3px;}
+.zdbt th:first-child{border-radius:10px 0 0 0;} .zdbt th:last-child{border-radius:0 10px 0 0;}
+.zdbt td{padding:9px 11px;border-bottom:1px solid #1a2740;vertical-align:middle;color:#dde4f2;}
+.zdbt tr:hover td{background:#141f38;}
+.zdbt tr:last-child td{border-bottom:none;}
+
+.zpb{display:inline-block;padding:3px 9px;border-radius:10px;font-size:10.5px;font-weight:500;}
+.zp7{background:rgba(167,140,240,.16);color:#bda7f7;} .zp10{background:rgba(90,158,255,.16);color:#8cbaff;}
+.zp15{background:rgba(63,219,142,.16);color:#7eeab2;} .zp20{background:rgba(240,184,74,.16);color:#f5c772;}
+.zsecb{display:inline-block;padding:3px 9px;border-radius:10px;font-size:10.5px;background:#16213d;color:#9fb3d9;border:1px solid #243456;}
+
+.ztoast{position:fixed;bottom:20px;right:20px;color:#fff;padding:11px 18px;border-radius:11px;font-size:12.5px;font-weight:500;display:flex;align-items:center;gap:8px;z-index:9999;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.4);}
+.ztoast.show{transform:translateY(0);opacity:1;}
+
+.zsbar{display:flex;gap:9px;margin-bottom:1.1rem;}
+.zsbar input{flex:1;padding:9px 13px;border:1px solid #243456;border-radius:10px;background:#10192e;color:#e8edf7;font-size:13px;}
+.zsbar input::placeholder{color:#4a5878;}
+.zsbar input:focus{outline:none;border-color:#3a7fe0;box-shadow:0 0 0 3px rgba(58,127,224,.18);}
+
+.zes{text-align:center;padding:2.8rem 1rem;color:#5a6c92;font-size:13px;}
+.zab{padding:4px 9px;font-size:10.5px;border:1px solid #243456;border-radius:7px;background:#0c1426;color:#7c8aa8;cursor:pointer;transition:all .15s;}
+.zab.del:hover{background:rgba(226,80,74,.14);color:#f08884;border-color:#5a2e2c;}
+.zpb2{height:5px;border-radius:3px;background:#1a2740;margin-top:5px;}
+.zpf{height:5px;border-radius:3px;transition:width .4s;}
+
+.zavt{width:33px;height:33px;border-radius:50%;background:rgba(58,127,224,.16);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#7eb3ff;flex-shrink:0;}
+</style>
+
+<h2 class="sr-only">Sistema de Gestión de Clientes Zonlin Dominicana S.R.L, tema premium oscuro</h2>
+<div class="zapp">
+
+<div class="zheader">
+  <svg width="52" height="52" viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="30" fill="white" fill-opacity=".08" stroke="white" stroke-opacity=".35" stroke-width="1"/>
+    <text x="32" y="24" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="14" fill="white">ZON</text>
+    <text x="32" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="rgba(255,255,255,.85)" letter-spacing="2">LIN</text>
+    <path d="M14 44 Q32 54 50 44" stroke="rgba(255,255,255,.5)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <circle cx="22" cy="46" r="2" fill="#5ad0ff"/><circle cx="32" cy="50" r="2" fill="#5ad0ff"/><circle cx="42" cy="46" r="2" fill="#5ad0ff"/>
+    <line x1="22" y1="46" x2="32" y2="50" stroke="rgba(90,208,255,.6)" stroke-width="1"/>
+    <line x1="32" y1="50" x2="42" y2="46" stroke="rgba(90,208,255,.6)" stroke-width="1"/>
+  </svg>
+  <div class="zbrand">
+    <h1>Zonlin Dominicana S.R.L</h1>
+    <p>Sistema de Gestión de Clientes — ISP</p>
+  </div>
+  <div class="zhright">
+    <div class="zdate" id="zhDate"></div>
+    <div class="zcount" id="zhCount">Cargando...</div>
+  </div>
+</div>
+
+<div class="zsheets">
+  <div class="zdot wait" id="zsdot"></div>
+  <div>
+    <div class="zslabel"><i class="ti ti-brand-google" aria-hidden="true"></i> Google Sheets</div>
+    <div class="zssub" id="zssub">Conectando automáticamente...</div>
+  </div>
+  <button class="zsbtn" id="zsbtn" onclick="zReconectar()"><i class="ti ti-refresh" aria-hidden="true"></i> Reconectar</button>
+</div>
+
+<div class="ztabs">
+  <button class="ztab active" onclick="zSwitchTab('reg')"><i class="ti ti-user-plus" aria-hidden="true"></i> Registrar</button>
+  <button class="ztab" onclick="zSwitchTab('db')"><i class="ti ti-database" aria-hidden="true"></i> Base de Datos</button>
+  <button class="ztab" onclick="zSwitchTab('st')"><i class="ti ti-chart-bar" aria-hidden="true"></i> Estadísticas</button>
+</div>
+
+<div id="ztab-reg" class="zsec active">
+  <div class="zcard">
+    <div class="zctitle"><i class="ti ti-id-badge-2" style="font-size:16px;color:#5a9eff" aria-hidden="true"></i> Información del Cliente</div>
+    <div class="zfg">
+      <div class="zfgi"><label>User ID</label><div class="zidw"><input type="text" id="zUserId" readonly/><span class="zidbadge">Auto</span></div></div>
+      <div class="zfgi"><label>Fecha de Registro</label><input type="text" id="zFechaReg" readonly/></div>
+      <div class="zfgi zfgf"><label>Nombre Completo <span class="zreq">*</span></label><input type="text" id="zNombre" placeholder="Ej: Juan Carlos Pérez Rodríguez"/></div>
+      <div class="zfgi"><label>Teléfono <span class="zreq">*</span></label><input type="text" id="zTel" placeholder="809-000-0000"/></div>
+      <div class="zfgi"><label>Cédula</label><input type="text" id="zCedula" placeholder="000-0000000-0"/></div>
+      <div class="zdiv"><i class="ti ti-wifi" style="font-size:10px;margin-right:3px" aria-hidden="true"></i> Servicio</div>
+      <div class="zfgi"><label>Plan <span class="zreq">*</span></label>
+        <select id="zPlan" onchange="zUpPrice()">
+          <option value="">— Seleccionar —</option>
+          <option value="7 Mbps">7 Mbps</option>
+          <option value="10 Mbps">10 Mbps</option>
+          <option value="15 Mbps">15 Mbps</option>
+          <option value="20 Mbps">20 Mbps</option>
+        </select>
+      </div>
+      <div class="zfgi"><label>Sector <span class="zreq">*</span></label>
+        <select id="zSector">
+          <option value="">— Seleccionar —</option>
+          <option value="Los Vasquez">Los Vasquez</option>
+          <option value="La Lomita">La Lomita</option>
+          <option value="La Toma">La Toma</option>
+          <option value="Morquecho">Morquecho</option>
+        </select>
+      </div>
+      <div class="zfgi"><label>Precio (RD$) <span class="zreq">*</span></label><input type="number" id="zPrecio" placeholder="0"/></div>
+      <div class="zfgi"><label>ONT Serial</label><input type="text" id="zOnt" placeholder="ZTEGC0A1B2C3"/></div>
+      <div class="zfgi"><label>IP Address</label><input type="text" id="zIp" placeholder="192.168.1.1"/></div>
+      <div class="zfgi"><label>GPS</label><input type="text" id="zGps" placeholder="18.4861° N, 69.9312° W"/></div>
+      <div class="zfgi zfgf"><label>Comentarios</label><textarea id="zCom" placeholder="Notas adicionales..."></textarea></div>
+    </div>
+    <div class="zbrow">
+      <button class="zbtn zbs" onclick="zLimpiar()"><i class="ti ti-eraser" aria-hidden="true"></i> Limpiar</button>
+      <button class="zbtn zbp" id="zBtnG" onclick="zGuardar()"><i class="ti ti-device-floppy" aria-hidden="true"></i> Guardar Cliente</button>
+    </div>
+  </div>
+</div>
+
+<div id="ztab-db" class="zsec">
+  <div class="zsbar">
+    <input type="text" id="zSrch" placeholder="Buscar por nombre, ID, sector, plan..." oninput="zRenderTabla()"/>
+    <button class="zbtn zbs" onclick="zSincronizar()" id="zBtnSy"><i class="ti ti-refresh" aria-hidden="true"></i> Sincronizar</button>
+    <button class="zbtn zbs" onclick="zExportCSV()"><i class="ti ti-file-download" aria-hidden="true"></i> CSV</button>
+  </div>
+  <div class="zcard" style="padding:0;overflow:hidden;"><div class="ztw" id="zTbl"></div></div>
+</div>
+
+<div id="ztab-st" class="zsec">
+  <div class="zsgrid" id="zSgrid"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+    <div class="zcard"><div class="zctitle"><i class="ti ti-wifi" style="font-size:15px;color:#5a9eff" aria-hidden="true"></i> Por Plan</div><div id="zPst"></div></div>
+    <div class="zcard"><div class="zctitle"><i class="ti ti-map-pin" style="font-size:15px;color:#5a9eff" aria-hidden="true"></i> Por Sector</div><div id="zSst"></div></div>
+  </div>
+  <div class="zcard" style="margin-top:1rem;">
+    <div class="zctitle"><i class="ti ti-users" style="font-size:15px;color:#3fdb8e" aria-hidden="true"></i> Últimos Registros</div>
+    <div id="zRct"></div>
+  </div>
+</div>
+
+</div>
+<div class="ztoast" id="zToast"></div>
+
+<script>
+const Z_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyjEL-x_ZUxCaglW3MTVpP9mJkAOtXFpQ-DBGSIU64DqXcCb2z-ZyDt8h4Gea_odLxd/exec';
+const Z_PP = {'7 Mbps':1200,'10 Mbps':1500,'15 Mbps':2000,'20 Mbps':2500};
+const Z_PC = {'7 Mbps':'zp7','10 Mbps':'zp10','15 Mbps':'zp15','20 Mbps':'zp20'};
+let zClients=[], zNextId=1, zConnected=false;
+
+function zPad(n){return n<10?'0'+n:''+n;}
+function zNowStr(){const d=new Date();return `${zPad(d.getDate())}/${zPad(d.getMonth()+1)}/${d.getFullYear()} ${zPad(d.getHours())}:${zPad(d.getMinutes())}`;}
+function zHDate(){const d=new Date();const dy=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];const mn=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];return `${dy[d.getDay()]}, ${d.getDate()} ${mn[d.getMonth()]} ${d.getFullYear()}`;}
+function zRecalc(){if(!zClients.length){zNextId=1;return;}const ns=zClients.map(c=>parseInt((c.id||'ZON-0').split('-')[1])||0);zNextId=Math.max(...ns)+1;}
+function zGetId(){return 'ZON-'+zPad(zNextId);}
+function zInitForm(){document.getElementById('zUserId').value=zGetId();document.getElementById('zFechaReg').value=zNowStr();}
+function zUpPrice(){const p=document.getElementById('zPlan').value;if(p&&Z_PP[p])document.getElementById('zPrecio').value=Z_PP[p];}
+function zLimpiar(){['zNombre','zTel','zCedula','zPrecio','zOnt','zIp','zGps','zCom'].forEach(id=>document.getElementById(id).value='');document.getElementById('zPlan').value='';document.getElementById('zSector').value='';zInitForm();}
+
+function zToast(msg,err){
+  const t=document.getElementById('zToast');
+  t.innerHTML=`<i class="ti ti-${err?'alert-circle':'circle-check'}" aria-hidden="true"></i> ${msg}`;
+  t.style.background=err?'#c43c38':'#1e9e5c';
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+function zSetStatus(st){
+  const dot=document.getElementById('zsdot');
+  const sub=document.getElementById('zssub');
+  dot.className='zdot '+({on:'on',off:'off',wait:'wait',err:'err'}[st]||'off');
+  if(st==='on'){sub.textContent='Conectado con Google Sheets — sincronización activa';zConnected=true;}
+  else if(st==='wait'){sub.textContent='Conectando...';zConnected=false;}
+  else if(st==='err'){sub.textContent='Error de conexión — usa el botón Reconectar';zConnected=false;}
+  else{sub.textContent='Sin conexión';zConnected=false;}
+}
+
+function zSaveLocal(){try{localStorage.setItem('znl_c',JSON.stringify(zClients));}catch(e){}}
+function zLoadLocal(){try{const s=localStorage.getItem('znl_c');if(s){zClients=JSON.parse(s);zRecalc();}}catch(e){}}
+
+async function zPing(){
+  zSetStatus('wait');
+  try{
+    const r=await fetch(Z_SHEETS_URL+'?action=ping');
+    const d=await r.json();
+    if(d.ok){zSetStatus('on');return true;}
+    zSetStatus('err');return false;
+  }catch(e){zSetStatus('err');return false;}
+}
+
+async function zSincronizar(){
+  if(!zConnected){zToast('Sin conexión con Google Sheets',true);return;}
+  const btn=document.getElementById('zBtnSy');
+  btn.innerHTML='<i class="ti ti-loader" aria-hidden="true"></i> Sincronizando...';btn.disabled=true;
+  try{
+    const r=await fetch(Z_SHEETS_URL+'?action=getClients');
+    const d=await r.json();
+    if(d.ok&&d.clients){
+      zClients=d.clients;zRecalc();zSaveLocal();
+      zUpdateHeader();zRenderTabla();zUpdateStats();
+      zToast(`${zClients.length} clientes sincronizados`);
+    }else{zToast('Error al sincronizar',true);}
+  }catch(e){zToast('Error de red al sincronizar',true);}
+  btn.innerHTML='<i class="ti ti-refresh" aria-hidden="true"></i> Sincronizar';btn.disabled=false;
+}
+
+async function zReconectar(){
+  const ok=await zPing();
+  if(ok){zToast('Reconectado con Google Sheets');zSincronizar();}
+  else zToast('No se pudo reconectar. Verifica el script.',true);
+}
+
+async function zPushCliente(c){
+  try{
+    const r=await fetch(Z_SHEETS_URL,{method:'POST',body:JSON.stringify({action:'saveClient',client:c})});
+    return await r.json();
+  }catch(e){return{ok:false,error:e.message};}
+}
+
+async function zGuardar(){
+  const nombre=document.getElementById('zNombre').value.trim();
+  const tel=document.getElementById('zTel').value.trim();
+  const plan=document.getElementById('zPlan').value;
+  const sector=document.getElementById('zSector').value;
+  const precio=document.getElementById('zPrecio').value;
+  if(!nombre||!tel||!plan||!sector||!precio){zToast('Completa los campos obligatorios (*)',true);return;}
+  const c={id:zGetId(),fecha:zNowStr(),nombre,telefono:tel,cedula:document.getElementById('zCedula').value.trim(),plan,sector,precio,ontSerial:document.getElementById('zOnt').value.trim(),ipAddress:document.getElementById('zIp').value.trim(),gps:document.getElementById('zGps').value.trim(),comentarios:document.getElementById('zCom').value.trim()};
+  const btn=document.getElementById('zBtnG');
+  btn.disabled=true;btn.innerHTML='<i class="ti ti-loader" aria-hidden="true"></i> Guardando...';
+  zClients.unshift(c);zNextId++;zSaveLocal();zUpdateHeader();
+  if(zConnected){
+    const r=await zPushCliente(c);
+    zToast(r.ok?`${c.id} guardado en Google Sheets`:`Guardado local (fallo Sheets)`,!r.ok);
+  }else{zToast(`${c.id} guardado localmente (sin conexión Sheets)`);}
+  zLimpiar();
+  btn.disabled=false;btn.innerHTML='<i class="ti ti-device-floppy" aria-hidden="true"></i> Guardar Cliente';
+}
+
+async function zEliminar(id){
+  if(!confirm('¿Eliminar cliente '+id+'?'))return;
+  zClients=zClients.filter(c=>c.id!==id);zSaveLocal();zUpdateHeader();zRenderTabla();zUpdateStats();
+  if(zConnected){
+    try{await fetch(Z_SHEETS_URL,{method:'POST',body:JSON.stringify({action:'deleteClient',clientId:id})});zToast('Cliente eliminado de Google Sheets');}
+    catch(e){zToast('Eliminado local, error en Sheets',true);}
+  }else zToast('Cliente eliminado');
+}
+
+function zRenderTabla(){
+  const q=(document.getElementById('zSrch').value||'').toLowerCase();
+  const f=zClients.filter(c=>(c.nombre||'').toLowerCase().includes(q)||(c.id||'').toLowerCase().includes(q)||(c.sector||'').toLowerCase().includes(q)||(c.plan||'').toLowerCase().includes(q)||(c.telefono||'').includes(q)||(c.cedula||'').includes(q));
+  const cont=document.getElementById('zTbl');
+  if(!zClients.length){cont.innerHTML='<div class="zes"><i class="ti ti-users" style="font-size:38px;display:block;margin-bottom:8px;opacity:.3" aria-hidden="true"></i>No hay clientes aún. Registra el primero.</div>';return;}
+  if(!f.length){cont.innerHTML='<div class="zes">Sin resultados para esta búsqueda.</div>';return;}
+  let h=`<table class="zdbt"><thead><tr><th>ID</th><th>Nombre</th><th>Tel.</th><th>Plan</th><th>Sector</th><th>Precio</th><th>ONT Serial</th><th>IP</th><th>Fecha</th><th></th></tr></thead><tbody>`;
+  f.forEach(c=>{h+=`<tr>
+    <td style="font-weight:500;color:#5a9eff">${c.id}</td>
+    <td style="font-weight:500">${c.nombre}</td>
+    <td>${c.telefono||''}</td>
+    <td><span class="zpb ${Z_PC[c.plan]||''}">${c.plan}</span></td>
+    <td><span class="zsecb">${c.sector}</span></td>
+    <td style="font-weight:500;color:#3fdb8e">RD$ ${Number(c.precio||0).toLocaleString()}</td>
+    <td style="color:#7c8aa8">${c.ontSerial||'—'}</td>
+    <td style="color:#7c8aa8">${c.ipAddress||'—'}</td>
+    <td style="color:#5a6c92;font-size:10px">${c.fecha}</td>
+    <td><button class="zab del" onclick="zEliminar('${c.id}')"><i class="ti ti-trash" aria-hidden="true"></i></button></td>
+  </tr>`;});
+  h+='</tbody></table>';cont.innerHTML=h;
+}
+
+function zUpdateStats(){
+  const tot=zClients.length;
+  const ing=zClients.reduce((s,c)=>s+Number(c.precio||0),0);
+  const pl={},sc={};
+  zClients.forEach(c=>{pl[c.plan]=(pl[c.plan]||0)+1;sc[c.sector]=(sc[c.sector]||0)+1;});
+  const tp=Object.entries(pl).sort((a,b)=>b[1]-a[1])[0];
+  const ts=Object.entries(sc).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('zSgrid').innerHTML=`
+    <div class="zsc blue"><div class="zsn">${tot}</div><div class="zsl">Total Clientes</div></div>
+    <div class="zsc green"><div class="zsn">RD$ ${ing.toLocaleString()}</div><div class="zsl">Ingresos Mensuales</div></div>
+    <div class="zsc amber"><div class="zsn">${tp?tp[0]:'—'}</div><div class="zsl">Plan Popular</div></div>
+    <div class="zsc purple"><div class="zsn">${ts?ts[0]:'—'}</div><div class="zsl">Sector Líder</div></div>`;
+  const pc=['#a78cf0','#5a9eff','#3fdb8e','#f0b84a'];
+  let ph='';['7 Mbps','10 Mbps','15 Mbps','20 Mbps'].forEach((p,i)=>{const c=pl[p]||0;const pct=tot?Math.round(c/tot*100):0;ph+=`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;color:#dde4f2"><span>${p}</span><span style="color:#7c8aa8">${c}</span></div><div class="zpb2"><div class="zpf" style="width:${pct}%;background:${pc[i]}"></div></div></div>`;});
+  document.getElementById('zPst').innerHTML=ph||'<p style="font-size:12px;color:#7c8aa8">Sin datos.</p>';
+  const sc2=['#5a9eff','#4ad0d6','#3fdb8e','#a78cf0'];
+  let sh='';['Los Vasquez','La Lomita','La Toma','Morquecho'].forEach((s,i)=>{const c=sc[s]||0;const pct=tot?Math.round(c/tot*100):0;sh+=`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;color:#dde4f2"><span>${s}</span><span style="color:#7c8aa8">${c}</span></div><div class="zpb2"><div class="zpf" style="width:${pct}%;background:${sc2[i]}"></div></div></div>`;});
+  document.getElementById('zSst').innerHTML=sh||'<p style="font-size:12px;color:#7c8aa8">Sin datos.</p>';
+  const rec=zClients.slice(0,5);
+  let rh=rec.length?'':'<p style="font-size:12px;color:#7c8aa8">Sin registros.</p>';
+  rec.forEach(c=>{rh+=`<div style="display:flex;align-items:center;gap:11px;padding:8px 0;border-bottom:1px solid #1a2740">
+    <div class="zavt">${(c.nombre||'??').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>
+    <div style="flex:1;min-width:0"><p style="font-weight:500;font-size:12.5px;color:#e8edf7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.nombre}</p><p style="font-size:10.5px;color:#7c8aa8">${c.id} · ${c.sector}</p></div>
+    <div style="text-align:right;flex-shrink:0"><span class="zpb ${Z_PC[c.plan]||''}">${c.plan}</span><p style="font-size:10px;color:#5a6c92;margin-top:3px">RD$ ${Number(c.precio||0).toLocaleString()}/mes</p></div>
+  </div>`;});
+  document.getElementById('zRct').innerHTML=rh;
+}
+
+function zUpdateHeader(){
+  document.getElementById('zhDate').textContent=zHDate();
+  document.getElementById('zhCount').textContent=`${zClients.length} cliente${zClients.length!==1?'s':''} registrado${zClients.length!==1?'s':''}`;
+}
+
+function zSwitchTab(n){
+  document.querySelectorAll('.ztab').forEach((t,i)=>t.classList.toggle('active',['reg','db','st'][i]===n));
+  document.querySelectorAll('.zsec').forEach(s=>s.classList.remove('active'));
+  document.getElementById('ztab-'+n).classList.add('active');
+  if(n==='db')zRenderTabla();
+  if(n==='st')zUpdateStats();
+}
+
+function zExportCSV(){
+  if(!zClients.length){zToast('No hay datos',true);return;}
+  const h=['ID','Nombre','Teléfono','Cédula','Plan','Sector','Precio','ONT Serial','IP','GPS','Comentarios','Fecha'];
+  const rows=zClients.map(c=>[c.id,c.nombre,c.telefono,c.cedula,c.plan,c.sector,c.precio,c.ontSerial,c.ipAddress,c.gps,c.comentarios,c.fecha].map(v=>`"${(v||'').replace(/"/g,'""')}"`).join(','));
+  const csv=[h.join(','),...rows].join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=`zonlin_${new Date().toISOString().slice(0,10)}.csv`;a.click();
+  zToast('CSV exportado');
+}
+
+zLoadLocal();zInitForm();zUpdateHeader();
+zPing().then(ok=>{if(ok){zToast('Conectado con Google Sheets');zSincronizar();}else{zToast('No se pudo conectar con Sheets. Verifica el script.',true);}});
+</script>
